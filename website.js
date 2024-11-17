@@ -13,6 +13,7 @@ class Website {
 
     async scrape() {
         try {
+            console.log('scraping from ' + this.url);
             const response = await axios.get(this.url);
             const $ = cheerio.load(response.data);
 
@@ -20,9 +21,6 @@ class Website {
             
             $('body').find('script, style, img, input').remove();
             this.text = $('body').text().replace(/\s+/g, '\n').trim();
-            
-            console.log(`Title: ${this.title}`);
-            console.log(`Text: ${this.text}`);
         } catch (error) {
             console.error(`Error fetching the URL: ${error}`);
         }
